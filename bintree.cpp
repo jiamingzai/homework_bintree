@@ -1,9 +1,9 @@
-// ¶ş²æÊ÷µÄ½¨Á¢ºÍÊä³ö.cpp : Defines the entry point for the console application.
+// äºŒå‰æ ‘çš„å»ºç«‹å’Œè¾“å‡º.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
 #include "iostream"
-#define MAX_ROW_SIZE 33 //×î´óĞĞ½ÚµãÊı
+#define MAX_ROW_SIZE 33 //æœ€å¤§è¡ŒèŠ‚ç‚¹æ•°
 typedef char DateType;
 using namespace std; 
 
@@ -13,79 +13,79 @@ struct Node{
 	struct Node *rightChildren;
 };
 
-Node *BinTreeEst(Node *root,DateType data[],int size,int counter=0,int sum=1){ /*µİ¹é½¨Á¢¶ş²æÊ÷*/
+Node *BinTreeEst(Node *root,DateType data[],int size,int counter=0,int sum=1){ /*é€’å½’å»ºç«‹äºŒå‰æ ‘*/
 	if(size==0||sum>size) return NULL;
 	root=(Node*)malloc(sizeof(Node));
 	root->data=data[counter]; ++sum;
-	if(2*counter+1<size){ //ÅĞ¶ÏÊÇ·ñÓĞ×óº¢×Ó½Úµã
+	if(2*counter+1<size){ //åˆ¤æ–­æ˜¯å¦æœ‰å·¦å­©å­èŠ‚ç‚¹
 		root->leftChildren=BinTreeEst(root->leftChildren,data,size,2*counter+1,sum);
 	}else root->leftChildren=NULL;
-	if(2*counter+2<size){ //ÅĞ¶ÏÊÇ·ñÓĞÓÒº¢×Ó½Úµã
+	if(2*counter+2<size){ //åˆ¤æ–­æ˜¯å¦æœ‰å³å­©å­èŠ‚ç‚¹
 		root->rightChildren=BinTreeEst(root->rightChildren,data,size,2*counter+2,sum);
 	}else root->rightChildren=NULL;
 	return root;
 }
 
-inline void visit(Node *root){ //·ÃÎÊ²Ù×÷º¯Êı
+inline void visit(Node *root){ //è®¿é—®æ“ä½œå‡½æ•°
 	cout<<root->data<<' ';
 }
 
-void layPrint(Node *root){ /*²ãĞòÊä³ö*/
+void layPrint(Node *root){ /*å±‚åºè¾“å‡º*/
 	Node *arr[MAX_ROW_SIZE]; int i=0,layer=1;
 	if(root){ 
-		arr[0]=root; cout<<"²ãĞò: ";
+		arr[0]=root; cout<<"å±‚åº: ";
 		for(;;){
 			for(int j=0;j<layer;j++)
-				if(root=arr[j]) cout<<root->data<<' '; //·Ç¿Õ½ÚµãÊä³ö
-				else return; //×îÏÂ²ãµ½Ä©Î²ÍË³ö
-			if(arr[0]->leftChildren==NULL) return; //ÍêÈ«¶ş²æÊ÷×óÏÂ½ÇµÚÒ»¸ö·Ç¿Õ
-			for(i=layer-1;root->leftChildren==NULL;root=arr[--i]); //ÕÒµ½Í¬Ò»²ã×îÓÒ±ß×óº¢×Ó·Ç¿Õ½Úµã
-			for(;i>=0;--i){ //ÓÉ±¾²ã½ÚµãÕÒµ½ÏÂ²ã½Úµã
+				if(root=arr[j]) cout<<root->data<<' '; //éç©ºèŠ‚ç‚¹è¾“å‡º
+				else return; //æœ€ä¸‹å±‚åˆ°æœ«å°¾é€€å‡º
+			if(arr[0]->leftChildren==NULL) return; //å®Œå…¨äºŒå‰æ ‘å·¦ä¸‹è§’ç¬¬ä¸€ä¸ªéç©º
+			for(i=layer-1;root->leftChildren==NULL;root=arr[--i]); //æ‰¾åˆ°åŒä¸€å±‚æœ€å³è¾¹å·¦å­©å­éç©ºèŠ‚ç‚¹
+			for(;i>=0;--i){ //ç”±æœ¬å±‚èŠ‚ç‚¹æ‰¾åˆ°ä¸‹å±‚èŠ‚ç‚¹
 				root=arr[i]; 
 				arr[2*i+1]=root->rightChildren;
 				arr[2*i]=root->leftChildren;
 			}
-		layer*=2; //µ±Ç°Êı×é½ÚµãÊı·­±¶
+		layer*=2; //å½“å‰æ•°ç»„èŠ‚ç‚¹æ•°ç¿»å€
 		}
 	}
 }
 
-void printBTreeStat(Node *root,int i=1){ /*°¼Èë´òÓ¡¶ş²æÊ÷*/
+void printBTreeStat(Node *root,int i=1){ /*å‡¹å…¥æ‰“å°äºŒå‰æ ‘*/
 	if(root->rightChildren)
-		printBTreeStat(root->rightChildren,i+1); //ËÑË÷×ó½Úµã
-	for(int n=i;n>0;--n) cout<<"   "; //´òÓ¡µ±Ç°½Úµã
+		printBTreeStat(root->rightChildren,i+1); //æœç´¢å·¦èŠ‚ç‚¹
+	for(int n=i;n>0;--n) cout<<"   "; //æ‰“å°å½“å‰èŠ‚ç‚¹
 	cout<<"---"<<root->data<<endl;
 	if(root->leftChildren)
-		printBTreeStat(root->leftChildren,i+1); //ËÑË÷ÓÒ½Úµã
+		printBTreeStat(root->leftChildren,i+1); //æœç´¢å³èŠ‚ç‚¹
 }
 
-bool isComBTree(Node *root){ /*ÅĞ¶ÏÊÇ·ñÍêÈ«¶ş²æÊ÷*/
+bool isComBTree(Node *root){ /*åˆ¤æ–­æ˜¯å¦å®Œå…¨äºŒå‰æ ‘*/
 	Node *arr[MAX_ROW_SIZE]; int i=0,layer=1, flag=0, counter=0;
-	if(root){ //¿Õ½Úµã²»ÊÇ
+	if(root){ //ç©ºèŠ‚ç‚¹ä¸æ˜¯
 		arr[0]=root;
 		for(;;){
-			counter=0; //²ã½ÚµãÊı¼ÆÊıÆ÷ÖÃÁã
-			for(i=layer-1;i>=0;--i){ //ÓÉµ±Ç°½ÚµãÕÒµ½×Ó½Úµã
+			counter=0; //å±‚èŠ‚ç‚¹æ•°è®¡æ•°å™¨ç½®é›¶
+			for(i=layer-1;i>=0;--i){ //ç”±å½“å‰èŠ‚ç‚¹æ‰¾åˆ°å­èŠ‚ç‚¹
 				arr[2*i+1]=arr[i]->rightChildren; 
 				arr[2*i]=arr[i]->leftChildren;
-				if(arr[2*i+1]!=NULL&&arr[2*i]==NULL) return false; //Ë³±ãÅĞ¶ÏÈô×ó½ÚµãÎª¿Õ£¬ÓÒ½Úµã²»¿ÕµÄÇé¿ö
-				if(arr[2*i+1]) ++counter; //¼ÆÊı·Ç¿Õ½Úµã
+				if(arr[2*i+1]!=NULL&&arr[2*i]==NULL) return false; //é¡ºä¾¿åˆ¤æ–­è‹¥å·¦èŠ‚ç‚¹ä¸ºç©ºï¼Œå³èŠ‚ç‚¹ä¸ç©ºçš„æƒ…å†µ
+				if(arr[2*i+1]) ++counter; //è®¡æ•°éç©ºèŠ‚ç‚¹
 				if(arr[2*i]) ++counter;
 			}
-			if(counter==0) return true; //±¾²ã¶¼Îª¿ÕÄÇ¾ÍÊÇÍêÈ«¶ş²æÊ÷À²
-			layer*=2; if(counter==layer) continue; //Èç¹ûµ±Ç°½ÚµãÊı´ïµ½×î´óÖµ£¬¾Í²»ÓÃÅĞ¶ÏÁË
+			if(counter==0) return true; //æœ¬å±‚éƒ½ä¸ºç©ºé‚£å°±æ˜¯å®Œå…¨äºŒå‰æ ‘å•¦
+			layer*=2; if(counter==layer) continue; //å¦‚æœå½“å‰èŠ‚ç‚¹æ•°è¾¾åˆ°æœ€å¤§å€¼ï¼Œå°±ä¸ç”¨åˆ¤æ–­äº†
 			if(!arr[layer-1]&&(arr[0]->leftChildren||
-				arr[0]->rightChildren)) return false; //ÅĞ¶Ï×îÓÒ±ßÎª¿Õµ«ÏÂ²ã½Úµã´æÔÚµÄÇé¿ö
-			for(i=layer-2;i>=2;i-=2) //ÅĞ¶Ï¼Ğ·ìÖ®¼äµÄ×ó·Ç¿ÕÓÒ¿ÕÇé¿ö
+				arr[0]->rightChildren)) return false; //åˆ¤æ–­æœ€å³è¾¹ä¸ºç©ºä½†ä¸‹å±‚èŠ‚ç‚¹å­˜åœ¨çš„æƒ…å†µ
+			for(i=layer-2;i>=2;i-=2) //åˆ¤æ–­å¤¹ç¼ä¹‹é—´çš„å·¦éç©ºå³ç©ºæƒ…å†µ
 				if(arr[i]&&!arr[i-1]) return false;
-			if(counter<=layer) return true; //Èç¹û¶¼À¹²»×¡·ûºÏ¿©
+			if(counter<=layer) return true; //å¦‚æœéƒ½æ‹¦ä¸ä½ç¬¦åˆå’¯
 		}
-	}else false
+	}else return false;
 }
 
-void bTreeDLR(Node *root){ //·Çµİ¹éÏÈĞòÊä³ö ½Ï¼òµ¥²»ÓÃ½âÊÍÀ²
+void bTreeDLR(Node *root){ //éé€’å½’å…ˆåºè¾“å‡º è¾ƒç®€å•ä¸ç”¨è§£é‡Šå•¦
 	int i=0; Node *arr[MAX_ROW_SIZE];
-	cout<<"·Çµİ¹éDLR: ";
+	cout<<"éé€’å½’DLR: ";
 	for(;;){
 		if(root) visit(root);
 		if(root->leftChildren){
@@ -100,7 +100,7 @@ void bTreeDLR(Node *root){ //·Çµİ¹éÏÈĞòÊä³ö ½Ï¼òµ¥²»ÓÃ½âÊÍÀ²
 	}
 }
 
-void bTreeLDR(Node *root){ /*ÖĞĞòÊä³ö*/
+void bTreeLDR(Node *root){ /*ä¸­åºè¾“å‡º*/
 	if(root->leftChildren)
 		bTreeLDR(root->leftChildren);
 	cout<<root->data<<' ';
@@ -108,7 +108,7 @@ void bTreeLDR(Node *root){ /*ÖĞĞòÊä³ö*/
 		bTreeLDR(root->rightChildren);
 }
 
-void bTreeLRD(Node *root){ /*ºóĞòÊä³ö*/
+void bTreeLRD(Node *root){ /*ååºè¾“å‡º*/
 	if(root->leftChildren)
 		bTreeLRD(root->leftChildren);
 	cout<<root->data<<' ';
@@ -116,7 +116,7 @@ void bTreeLRD(Node *root){ /*ºóĞòÊä³ö*/
 		bTreeLRD(root->rightChildren);
 }
 
-void counter(Node *root,int arr[]){ /*arr[0]´¢´æÒ¶×Ó½Úµã£¬arr[1]´æ·ÇÒ¶×Ó½Úµã*/
+void counter(Node *root,int arr[]){ /*arr[0]å‚¨å­˜å¶å­èŠ‚ç‚¹ï¼Œarr[1]å­˜éå¶å­èŠ‚ç‚¹*/
 	if(root==NULL) return;
 	if(root->leftChildren==NULL&&root->rightChildren==NULL){ ++arr[0]; return;}
 	else ++arr[1];
@@ -124,11 +124,11 @@ void counter(Node *root,int arr[]){ /*arr[0]´¢´æÒ¶×Ó½Úµã£¬arr[1]´æ·ÇÒ¶×Ó½Úµã*/
 	counter(root->rightChildren,arr);
 }
 
-int bTreeDeep(Node *root,int i=0){ /*¶ş²æÊ÷Éî¶È*/
+int bTreeDeep(Node *root,int i=0){ /*äºŒå‰æ ‘æ·±åº¦*/
 	if(root->leftChildren==NULL&&root->rightChildren==NULL) return i;
 	int temp, te=i;
 	if(root->leftChildren)
-		temp=bTreeDeep(root->leftChildren,i+1); i=temp>i ? temp:i; //±È½ÏÈ¡½Ï´óÖµ
+		temp=bTreeDeep(root->leftChildren,i+1); i=temp>i ? temp:i; //æ¯”è¾ƒå–è¾ƒå¤§å€¼
 	if(root->rightChildren){
 		temp=bTreeDeep(root->leftChildren,te+1); i=temp>i ? temp:i;	
 	}
@@ -141,16 +141,16 @@ int main(int argc, char* argv[])
 		'm','n','o','p'}; int arr[2]={0,0};
 	Node *root=NULL;
 	root=BinTreeEst(root,BT,16);
-	cout<<"µİ¹éLDR: ";
+	cout<<"é€’å½’LDR: ";
 	bTreeLDR(root); cout<<endl;
 	printBTreeStat(root);
-	cout<<endl<<"Éî¶È: "<<bTreeDeep(root)<<endl;
+	cout<<endl<<"æ·±åº¦: "<<bTreeDeep(root)<<endl;
 	counter(root,arr);
-	cout<<"Ò¶½Úµã¸öÊı: "<<arr[0]<<endl<<"½Úµã¸öÊı:"<<arr[1]<<endl;
+	cout<<"å¶èŠ‚ç‚¹ä¸ªæ•°: "<<arr[0]<<endl<<"èŠ‚ç‚¹ä¸ªæ•°:"<<arr[1]<<endl;
 	bTreeDLR(root); cout<<endl;
 	layPrint(root); cout<<endl;
-	if(isComBTree(root)) cout<<"ÊÇ¶ş²æÊ÷"<<endl;
-	else cout<<"²»ÊÇ¶ş²æÊ÷"<<endl;
+	if(isComBTree(root)) cout<<"æ˜¯äºŒå‰æ ‘"<<endl;
+	else cout<<"ä¸æ˜¯äºŒå‰æ ‘"<<endl;
 	return 0;
 }
 
