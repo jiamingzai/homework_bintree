@@ -13,7 +13,7 @@ struct Node{
 	struct Node *rightChildren;
 };
 
-Node *BinTreeEst(Node *root,DateType data[],int size,int counter=0,int sum=1){ /*递归建立二叉树*/
+Node *BinTreeEst(Node *root, DateType data[], int size, int counter=0, int sum=1){ /*递归建立二叉树*/
 	if(size==0||sum>size) return NULL;
 	root=(Node*)malloc(sizeof(Node));
 	root->data=data[counter]; ++sum;
@@ -50,7 +50,7 @@ void layPrint(Node *root){ /*层序输出*/
 	}
 }
 
-void printBTreeStat(Node *root,int i=1){ /*凹入打印二叉树*/
+void printBTreeStat(Node *root, int i=1){ /*凹入打印二叉树*/
 	if(root->rightChildren)
 		printBTreeStat(root->rightChildren,i+1); //搜索左节点
 	for(int n=i;n>0;--n) cout<<"   "; //打印当前节点
@@ -96,7 +96,8 @@ void bTreeDLR(Node *root){ //非递归先序输出 较简单不用解释啦
 			visit(root); root=root->rightChildren;
 		}else{
 			if(i==0) return;
-			root=arr[--i];}
+			root=arr[--i];
+		}
 	}
 }
 
@@ -116,7 +117,7 @@ void bTreeLRD(Node *root){ /*后序输出*/
 		bTreeLRD(root->rightChildren);
 }
 
-void counter(Node *root,int arr[]){ /*arr[0]储存叶子节点，arr[1]存非叶子节点*/
+void counter(Node *root, int arr[]){ /*arr[0]储存叶子节点，arr[1]存非叶子节点*/
 	if(root==NULL) return;
 	if(root->leftChildren==NULL&&root->rightChildren==NULL){ ++arr[0]; return;}
 	else ++arr[1];
@@ -124,7 +125,7 @@ void counter(Node *root,int arr[]){ /*arr[0]储存叶子节点，arr[1]存非叶
 	counter(root->rightChildren,arr);
 }
 
-int bTreeDeep(Node *root,int i=0){ /*二叉树深度*/
+int bTreeDeep(Node *root, int i=0){ /*二叉树深度*/
 	if(root->leftChildren==NULL&&root->rightChildren==NULL) return i;
 	int temp, te=i;
 	if(root->leftChildren)
